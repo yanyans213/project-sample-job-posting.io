@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Posting System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Login Page -->
+    <div id="loginPage" class="page active">
+        <div class="login-container">
+            <div class="login-form">
+                <h2>Job Posting System</h2>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </form>
+                <div class="demo-credentials">
+                    <p><strong>Demo Credentials:</strong></p>
+                    <p>Username: admin | Password: admin123</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Page -->
+    <div id="dashboardPage" class="page">
+        <nav class="navbar">
+            <div class="nav-brand">
+                <h3>Job Posting Dashboard</h3>
+            </div>
+            <div class="nav-actions">
+                <button id="addJobBtn" class="btn btn-primary">Add New Job</button>
+                <button id="logoutBtn" class="btn btn-secondary">Logout</button>
+            </div>
+        </nav>
+
+        <div class="dashboard-container">
+            <div class="dashboard-header">
+                <h2>Job Listings</h2>
+                <div class="stats">
+                    <div class="stat-card">
+                        <h4 id="totalJobs">0</h4>
+                        <p>Total Jobs</p>
+                    </div>
+                    <div class="stat-card">
+                        <h4 id="activeJobs">0</h4>
+                        <p>Active Jobs</p>
+                    </div>
+                    <div class="stat-card">
+                        <h4 id="filteredJobs">0</h4>
+                        <p>Showing</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filter Controls -->
+            <div class="filter-controls">
+                <h3>Filter Jobs:</h3>
+                <div class="filter-row">
+                    <div class="filter-group">
+                        <label for="filterDateFrom">📅 Filter by Date Range:</label>
+                        <div class="date-range-inputs">
+                            <input type="date" id="filterDateFrom" placeholder="From" onchange="jobSystem.applyFilters()">
+                            <span>to</span>
+                            <input type="date" id="filterDateTo" placeholder="To" onchange="jobSystem.applyFilters()">
+                        </div>
+                    </div>
+                    <div class="filter-group">
+                        <label for="filterColor">🎨 Filter by Color:</label>
+                        <select id="filterColor" onchange="jobSystem.applyFilters()">
+                            <option value="">All Colors</option>
+                            <option value="Red">Red</option>
+                            <option value="Blue">Blue</option>
+                            <option value="Green">Green</option>
+                            <option value="Yellow">Yellow</option>
+                            <option value="Orange">Orange</option>
+                            <option value="Purple">Purple</option>
+                            <option value="Black">Black</option>
+                            <option value="White">White</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="filterStatus">📊 Filter by Status:</label>
+                        <select id="filterStatus" onchange="jobSystem.applyFilters()">
+                            <option value="">All Status</option>
+                            <option value="Lodge">Lodge</option>
+                            <option value="Marine">Marine</option>
+                            <option value="Examiner">Examiner</option>
+                            <option value="Appraiser">Appraiser</option>
+                            <option value="Final">Final</option>
+                            <option value="Done">Done</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="filterSection">📂 Filter by Section:</label>
+                        <select id="filterSection" onchange="jobSystem.applyFilters()">
+                            <option value="">All Sections</option>
+                            <option value="1">Section 1</option>
+                            <option value="2">Section 2</option>
+                            <option value="3">Section 3</option>
+                            <option value="4">Section 4</option>
+                            <option value="5">Section 5</option>
+                            <option value="6">Section 6</option>
+                            <option value="7">Section 7</option>
+                            <option value="8">Section 8</option>
+                            <option value="9">Section 9</option>
+                            <option value="10">Section 10</option>
+                            <option value="11">Section 11</option>
+                            <option value="12">Section 12</option>
+                            <option value="13">Section 13</option>
+                            <option value="14">Section 14</option>
+                            <option value="15">Section 15</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="filter-row">
+                    <div class="filter-group">
+                        <label for="filterPort">🚢 Filter by Port:</label>
+                        <select id="filterPort" onchange="jobSystem.applyFilters()">
+                            <option value="">All Ports</option>
+                            <option value="MCT - Mindanao Container Terminal">MCT - Mindanao Container Terminal</option>
+                            <option value="LGICT - Laguna Gateway Terminal">LGICT - Laguna Gateway Terminal</option>
+                            <option value="VCT - Visayas Container Terminal">VCT - Visayas Container Terminal</option>
+                            <option value="MGT - Matadi Gateway Terminal">MGT - Matadi Gateway Terminal</option>
+                            <option value="SPICT - South Pacific International Container">SPICT - South Pacific International Container</option>
+                            <option value="MITL - Motukea International Terminal">MITL - Motukea International Terminal</option>
+                            <option value="BICT - Batumi International Container Terminal">BICT - Batumi International Container Terminal</option>
+                            <option value="OMT - Onne Multipurpose Terminal">OMT - Onne Multipurpose Terminal</option>
+                            <option value="TecPlata - TecPlata S.A.">TecPlata - TecPlata S.A.</option>
+                            <option value="AGCT - Adriatic Gate Container Terminal">AGCT - Adriatic Gate Container Terminal</option>
+                            <option value="MICT - Manila International Container Terminal">MICT - Manila International Container Terminal</option>
+                            <option value="NORTHPORT - Manila North Harbor Port International Terminal">NORTHPORT - Manila North Harbor Port International Terminal</option>
+                            <option value="SBITC - Subic Bay International Terminals">SBITC - Subic Bay International Terminals</option>
+                            <option value="POM - Port of Manila">POM - Port of Manila</option>
+                        </select>
+                    </div>
+                    <div class="search-group">
+                        <label for="searchEntry">🔍 Search by Entry No.:</label>
+                        <input type="text" id="searchEntry" placeholder="Enter entry number to search..." oninput="jobSystem.applyFilters()">
+                    </div>
+                </div>
+                <div class="filter-actions">
+                    <button class="btn btn-secondary" onclick="jobSystem.clearFilters()">Clear All Filters</button>
+                    <span id="filterStatus" class="filter-status"></span>
+                </div>
+            </div>
+
+            
+
+            <div class="jobs-table-container">
+    <div class="table-header">
+        <div class="table-info">
+            <span id="tableInfo">Showing 1-10 of 25 jobs</span>
+        </div>
+        <div class="items-per-page">
+            <label for="itemsPerPage">Items per page:</label>
+            <select id="itemsPerPage" onchange="jobSystem.changeItemsPerPage(this.value)">
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+        </div>
+    </div>
+    
+    <table class="jobs-table">
+        <thead>
+            <tr>
+                <th style="width: 60px;">#</th>
+                <th class="sortable" data-sort="date">Date</th>
+                <th>Entry No.</th>
+                <th>Container No.</th>
+                <th>Port</th>
+                <th class="sortable" data-sort="section">Section</th>
+                <th class="sortable" data-sort="status">Status</th>
+                <th class="sortable" data-sort="color">Color</th>
+                <th style="width: 150px;">Actions</th>
+            </tr>
+        </thead>
+        <tbody id="jobsTableBody">
+            <!-- Jobs will be populated here -->
+        </tbody>
+    </table>
+    
+    <div class="pagination-container">
+        <div class="pagination-info">
+            <span id="paginationInfo">Page 1 of 3</span>
+        </div>
+        <div class="pagination-controls">
+            <button id="firstPageBtn" class="btn btn-pagination" onclick="jobSystem.goToPage(1)" disabled>
+                <span>⟪</span>
+            </button>
+            <button id="prevPageBtn" class="btn btn-pagination" onclick="jobSystem.goToPage(jobSystem.currentPage - 1)" disabled>
+                <span>‹</span>
+            </button>
+            <div id="pageNumbers" class="page-numbers">
+                <!-- Page numbers will be populated here -->
+            </div>
+            <button id="nextPageBtn" class="btn btn-pagination" onclick="jobSystem.goToPage(jobSystem.currentPage + 1)">
+                <span>›</span>
+            </button>
+            <button id="lastPageBtn" class="btn btn-pagination" onclick="jobSystem.goToPage(jobSystem.totalPages)">
+                <span>⟫</span>
+            </button>
+        </div>
+    </div>
+</div>
+        </div>
+    </div>
+
+    <!-- Add Job Page -->
+    <div id="addJobPage" class="page">
+        <nav class="navbar">
+            <div class="nav-brand">
+                <h3>Add New Job</h3>
+            </div>
+            <div class="nav-actions">
+                <button id="backToDashboard" class="btn btn-secondary">Back to Dashboard</button>
+            </div>
+        </nav>
+
+        <div class="form-container">
+            <form id="addJobForm" class="job-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="jobDate">Date</label>
+                        <input type="date" id="jobDate" name="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="jobColor">Color</label>
+                        <select id="jobColor" name="color" required>
+                            <option value="">Select Color</option>
+                            <option value="Red">Red</option>
+                            <option value="Blue">Blue</option>
+                            <option value="Green">Green</option>
+                            <option value="Yellow">Yellow</option>
+                            <option value="Orange">Orange</option>
+                            <option value="Purple">Purple</option>
+                            <option value="Black">Black</option>
+                            <option value="White">White</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="jobPort">Port</label>
+                        <select id="jobPort" name="port" required>
+                            <option value="">Select Port</option>
+                            <option value="MCT - Mindanao Container Terminal">MCT - Mindanao Container Terminal</option>
+                            <option value="LGICT - Laguna Gateway Terminal">LGICT - Laguna Gateway Terminal</option>
+                            <option value="VCT - Visayas Container Terminal">VCT - Visayas Container Terminal</option>
+                            <option value="MGT - Matadi Gateway Terminal">MGT - Matadi Gateway Terminal</option>
+                            <option value="SPICT - South Pacific International Container">SPICT - South Pacific International Container</option>
+                            <option value="MITL - Motukea International Terminal">MITL - Motukea International Terminal</option>
+                            <option value="BICT - Batumi International Container Terminal">BICT - Batumi International Container Terminal</option>
+                            <option value="OMT - Onne Multipurpose Terminal">OMT - Onne Multipurpose Terminal</option>
+                            <option value="TecPlata - TecPlata S.A.">TecPlata - TecPlata S.A.</option>
+                            <option value="AGCT - Adriatic Gate Container Terminal">AGCT - Adriatic Gate Container Terminal</option>
+                            <option value="MICT - Manila International Container Terminal">MICT - Manila International Container Terminal</option>
+                            <option value="NORTHPORT - Manila North Harbor Port International Terminal">NORTHPORT - Manila North Harbor Port International Terminal</option>
+                            <option value="SBITC - Subic Bay International Terminals">SBITC - Subic Bay International Terminals</option>
+                            <option value="POM - Port of Manila">POM - Port of Manila</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="jobStatus">Status</label>
+                        <select id="jobStatus" name="status" required>
+                            <option value="">Select Status</option>
+                            <option value="Lodge">Lodge</option>
+                            <option value="Marine">Marine</option>
+                            <option value="Examiner">Examiner</option>
+                            <option value="Appraiser">Appraiser</option>
+                            <option value="Final">Final</option>
+                            <option value="Done">Done</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="jobSection">Section</label>
+                        <select id="jobSection" name="section" required>
+                            <option value="">Select Section</option>
+                            <option value="1">Section 1</option>
+                            <option value="2">Section 2</option>
+                            <option value="3">Section 3</option>
+                            <option value="4">Section 4</option>
+                            <option value="5">Section 5</option>
+                            <option value="6">Section 6</option>
+                            <option value="7">Section 7</option>
+                            <option value="8">Section 8</option>
+                            <option value="9">Section 9</option>
+                            <option value="10">Section 10</option>
+                            <option value="11">Section 11</option>
+                            <option value="12">Section 12</option>
+                            <option value="13">Section 13</option>
+                            <option value="14">Section 14</option>
+                            <option value="15">Section 15</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="jobEntryNo">Entry No.</label>
+                        <input type="text" id="jobEntryNo" name="entryNo" placeholder="Enter entry number" required>
+                    </div>
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="jobContainerNo">Container No.</label>
+                    <input type="text" id="jobContainerNo" name="containerNo" placeholder="Enter container number" required>
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="jobRemarks">Remarks</label>
+                    <textarea id="jobRemarks" name="remarks" rows="4" placeholder="Enter any additional remarks or notes"></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Add Job</button>
+                    <button type="reset" class="btn btn-secondary">Clear Form</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Job Details/Edit Modal -->
+    <div id="jobModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Job Details</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body" id="jobModalBody">
+                <!-- Job details/edit form will be populated here -->
+            </div>
+            <div class="modal-footer" id="modalFooter">
+                <!-- Modal buttons will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
